@@ -1,4 +1,4 @@
-from .dbcommands import genre_create, film_create, stars_create, directors_create
+from .dbcommands import genre_create, film_create, stars_create, directors_create, push_video_link
 from .imdb_film_pars import film_pars
 import re
 
@@ -10,9 +10,8 @@ async def film_filler(film_name, link):
         film_data=film_pars(film_name)
         print(link)
         link=str(link).replace("'","''")
-        film_data[0]=film_data[0].replace("'","''")#film_data[0]
-        film_data[0]=film_data[0][:-1]
-        print('что нужно_'+film_data[0]+'_')
+        film_data[0]=film_data[0].replace("'","''")
+        await push_video_link(film_name, link)
      #   cursor.execute(f"UPDATE films_list SET `full link`='{link}' WHERE instr(name_film, '{film_data[0]}')")
        
     else:

@@ -2,7 +2,8 @@ from ..utils.states import OrderDataUser, FSMContext, State
 from aiogram import Bot, Dispatcher
 from aiogram import types
 from ..utils.text import telegram_markup
-from ..utils.dbcommands import get_all_info, get_message
+from ..utils.dbcommands import get_all_info, get_message, get_all_general_history, get_paper_count, get_trending_films
+from ..utils.scroll_keyboard import page_open
 from ..utils.keyboards import start_kerboard
 
 
@@ -13,24 +14,18 @@ async def movies_menu_handlers(bot: Bot, dp: Dispatcher):
         if message.text == telegram_markup(await get_message(8)):
             id_person = message['from']['id']
             text = message.text
+            trending_films = await get_trending_films()
+            print('len: '+str(len(trending_films)))
+        #    all_general_history = await get_all_general_history()
+            paper_count = await get_paper_count(id_person)
 
-            # cursor.execute("SELECT name_film, year, rating, genres FROM films_list ORDER BY `all views` DESC LIMIT 6")
-            # film_list= cursor.fetchall()
-            films_last_s = np.load('all_history.npy')
-            films_last_s = list(films_last_s)
-            films_last_s = tuple(reversed(films_last_s))
-            #  print(films_last_s)
-            # films_last_s.reverse()
-            #  page_inf = page_open(films_last_s, id_person)
-            cursor.execute(f"SELECT `paper count` FROM user_info WHERE id_tele='{id_person}'")
-            paper_count = cursor.fetchone()[0]
-            page_inf = page_open1(films_last_s, paper_count, id_person)
+            page_inf = await page_open(trending_films, paper_count, id_person)
 
             await bot.send_message(chat_id=id_person, text='🔥 Today Trending!')
 
             await bot.send_message(chat_id=id_person, text=page_inf[0], reply_markup=page_inf[1])
-            # await bot.send_message(chat_id =id_person, text='----------------------------------------------', reply_markup=just_back_yrarf_keybard)
-            await state.update_data(film_list=films_last_s, len_list=len(films_last_s), counter=0,
+
+            await state.update_data(film_list=trending_films, len_list=len(trending_films), counter=0,
                                     id_mes=message.message_id)
             await state.update_data(anime='tranding1')
             await OrderDataUser.tranding1.set()

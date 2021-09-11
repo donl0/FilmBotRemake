@@ -10,6 +10,7 @@ from django.conf import settings
 #from ...handlers.text import text_handlers
 from ...handlers.mainMenu import main_menu_handlers
 from ...handlers.video import video_handlers
+from ...handlers.moviesMenu import movies_menu_handlers
 
 #from ...handlers.callback import callback_handlers
 #from ...handlers.registration import registration_handlers, new_date_handlers
@@ -37,8 +38,11 @@ async def bot_settings(loop=None):
 
    # await cmd_handlers(bot, dp)
    # await text_handlers(bot, dp)
-    await main_menu_handlers(bot, dp)
     await video_handlers(bot, dp)
+    await main_menu_handlers(bot, dp)
+    await movies_menu_handlers(bot, dp)
+
+
     #await callback_handlers(bot, dp)
     #await registration_handlers(bot, dp)
     #await new_date_handlers(bot, dp)

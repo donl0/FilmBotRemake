@@ -2,8 +2,9 @@ from django.db import models
 from .filmInfo import Films
 
 
-class GeneralHistory(models.Model):
+class TrendingFilms(models.Model):
     film_name = models.ForeignKey(Films, on_delete=models.CASCADE)
+    # films that admin add by himself
 
     def __str__(self):
-        return self.film_name
+        return str(self.film_name)

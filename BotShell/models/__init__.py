@@ -7,3 +7,4 @@ from .generalHistory import GeneralHistory
 from .commentsDb import Comments
 from .messageEditor import Message
 from .admindb import Admins
+from .trending import TrendingFilms
