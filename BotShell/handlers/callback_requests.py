@@ -3,7 +3,8 @@ from aiogram import Bot, Dispatcher
 from aiogram import types
 from ..utils.text import telegram_markup
 from ..utils.dbcommands import get_all_info, get_message, get_all_general_history, get_paper_count, get_trending_films, \
-    get_id_likes_from_user, get_likes_from_user, decrease_film_likes
+    get_id_likes_from_user, get_likes_from_user, decrease_film_likes, increase_film_likes, add_new_liked_film_user, \
+    remove_liked_film_user
 from ..utils.scroll_keyboard import page_open
 import re
 
@@ -45,19 +46,22 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
                 # print(id_film)
                 await bot.answer_callback_query(callback_query_id=call.id, text='You like that movie 😍',
                                                 show_alert=False)
-                await decrease_film_likes(film_name)
+                await increase_film_likes(film_name)
+                await add_new_liked_film_user(film_name, id_person)
                 # увеличить количество лайков фильму, заебашить айди/название ф в персонажа
             #    cursor.execute(f"UPDATE films_list SET likes= likes+1 WHERE name_film = '{film_name}'")
                # cursor.execute(
                #     f"UPDATE user_info SET `id likes` = CONCAT(`id likes`,' {id_film}') WHERE id_tele='{id_person}';")
                 #conn.commit()
             else:
-                cursor.execute(f"UPDATE films_list SET likes= likes-1 WHERE name_film = '{film_name}'")
-                cursor.execute(f"SELECT `id likes` FROM  user_info WHERE id_tele='{id_person}'")
-                likes_list = cursor.fetchone()[0]
-                likes_list = likes_list.replace(' ' + str(id_film), '')
-                cursor.execute(f"UPDATE user_info SET `id likes` = '{likes_list}' WHERE id_tele='{id_person}';")
-                conn.commit()
+                await decrease_film_likes(film_name)
+                await remove_liked_film_user(film_name, id_person)
+             #   cursor.execute(f"UPDATE films_list SET likes= likes-1 WHERE name_film = '{film_name}'")
+              #  cursor.execute(f"SELECT `id likes` FROM  user_info WHERE id_tele='{id_person}'")
+               # likes_list = cursor.fetchone()[0]
+               # likes_list = likes_list.replace(' ' + str(id_film), '')
+               # cursor.execute(f"UPDATE user_info SET `id likes` = '{likes_list}' WHERE id_tele='{id_person}';")
+               # conn.commit()
 
                 await bot.answer_callback_query(callback_query_id=call.id,
                                                 text='Your like for that movie has been removed', show_alert=False)

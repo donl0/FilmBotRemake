@@ -11,6 +11,19 @@ from asgiref.sync import sync_to_async
 from django.db.models import F
 
 
+
+
+
+@sync_to_async
+def remove_liked_film_user(film_name, user_id):
+    Users.objects.get(id_tele=user_id).liked_films.remove(Films.objects.get(film_name=film_name))
+
+
+@sync_to_async
+def remove_disliked_film_user(film_name, user_id):
+    Users.objects.get(id_tele=user_id).disliked_films.remove(Films.objects.get(film_name=film_name))
+
+
 @sync_to_async
 def add_new_liked_film_user(film_name, user_id):
     Users.objects.get(id_tele=user_id).liked_films.add(Films.objects.get(film_name=film_name))
