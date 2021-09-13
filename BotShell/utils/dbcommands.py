@@ -11,8 +11,10 @@ from asgiref.sync import sync_to_async
 from django.db.models import F
 
 
-
-
+@sync_to_async
+def get_favourite_user(user_id):
+    favourite_list = Users.objects.get(id_tele=user_id).favourite.all()
+    return favourite_list
 
 @sync_to_async
 def remove_liked_film_user(film_name, user_id):

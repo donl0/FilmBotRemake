@@ -1,47 +1,49 @@
-from .dbcommands import get_all_by_film_name, get_admin
-from keyboards import InlineKeyboardMarkup,InlineKeyboardButton
+from .dbcommands import get_all_by_film_name, get_admin, get_favourite_user
+from aiogram.types import ReplyKeyboardRemove, \
+    ReplyKeyboardMarkup, KeyboardButton, \
+    InlineKeyboardMarkup, InlineKeyboardButton
+
 #from db_cursor import cursor, conn
 #from config import admin_id
 def film_create(film_name, id_person):
   admin_id = await get_admin()
-  #keyb for filn 👍👎🏿🧡▶️💬
-#   print('-------------------')
-#   print(film_name)
-  #print(film_name[0][0])
   film_name=film_name.replace("'", "''")
   film_inf = await get_all_by_film_name(film_name)
-  cursor.execute(f"SELECT * from `films_list` WHERE name_film='{film_name}'")
-  comm = cursor.fetchone()
-
-  cursor.execute(f"SELECT favourite FROM `user_info` WHERE id_tele={id_person}")
-  comm_list = cursor.fetchone()[0]
-  mass_i=[9,10,12]
-  list2=list(comm)
-  for i in mass_i:
-    if list2[i]>1000:
+  #film_inf
+  mass_counter_values = [film_inf.likes, film_name.dislikes, film_inf.comments_counter]
+ # cursor.execute(f"SELECT * from `films_list` WHERE name_film='{film_name}'")
+  #comm = cursor.fetchone()
+  # comm вся информация об одном фильме
+  favorurite_list = await get_favourite_user()
+ # cursor.execute(f"SELECT favourite FROM `user_info` WHERE id_tele={id_person}")
+ # comm_list = cursor.fetchone()[0]
+ # mass_i=[9, 10, 12]
+ # list2=list(comm)
+  for i in range(3):
+    if mass_counter_values[i]>1000:
       
-      print(list2[i])
-      list2[i]=list2[i]/1000
+    #  print(list2[i])
+      mass_counter_values[i]=mass_counter_values[i]/1000
       
-      list2[i]=round(list2[i],1)
-      list2[i]=str(list2[i])
-      if list2[i][-1]=='0':
-        list2[i]=list2[i][:-2]
+      mass_counter_values[i]=round(mass_counter_values[i],1)
+      mass_counter_values[i]=str(mass_counter_values[i])
+      if mass_counter_values[i][-1]=='0':
+        mass_counter_values[i]=mass_counter_values[i][:-2]
       #list2[i]=int(list2[i])
 
-      print(comm[i], list2[i])
+   #   print(comm[i], mass_counter_values[i])
     #  comm_int=comm[i]
-      list_int=list2[i]
+      list_int=mass_counter_values[i]
       list_int+='K'
-      comm=list(comm)
-      comm[i]=list_int
-  if not film_name in comm_list:
+      #comm=list(comm)
+      mass_counter_values[i]=list_int
+  if not film_name in favorurite_list:
   # print('----------COMM------')
   # print(comm)
     next_step_keyboard = InlineKeyboardMarkup(row_width=3, resize_keyboard=True)
-    item_film_like = InlineKeyboardButton(text='😍 '+str(comm[9]), callback_data='like video')
-    item_film_dislike = InlineKeyboardButton(text='🤬 '+str(comm[10]), callback_data='dislike video')
-    item_comm = InlineKeyboardButton(text='💬 ' +str(comm[12]), callback_data='comment video')
+    item_film_like = InlineKeyboardButton(text='😍 '+str(mass_counter_values[0]), callback_data='like video')
+    item_film_dislike = InlineKeyboardButton(text='🤬 '+str(mass_counter_values[1]), callback_data='dislike video')
+    item_comm = InlineKeyboardButton(text='💬 ' +str(mass_counter_values[2]), callback_data='comment video')
     item_fav = InlineKeyboardButton(text='🧡 Favourite', callback_data='add favourite')
     item_watch_f = InlineKeyboardButton(text='▶️ Watch now', callback_data='start watching')
     item_searc_an = InlineKeyboardButton(text='🔍 Search another', switch_inline_query_current_chat='')
@@ -55,14 +57,14 @@ def film_create(film_name, id_person):
     else:
       next_step_keyboard.add(item_film_like, item_film_dislike, item_comm).row(item_watch_f, item_searc_an)
   #  print('----------COMM------')
-    #print(comm)
+    #print(comm) 9 10 5
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
-    return [comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12], next_step_keyboard, comm[4], comm[16], comm[17]]
+    return [film_inf.film_name, film_inf.year, film_inf.rating, film_inf.genres.all(), film_inf.trailer_link, 'here was genres', mass_counter_values[2], next_step_keyboard, film_inf.description, comm[16], comm[17]]
   else:
     next_step_keyboard = InlineKeyboardMarkup(row_width=3, resize_keyboard=True)
-    item_film_like = InlineKeyboardButton(text='😍 '+str(comm[9]), callback_data='like video')
-    item_film_dislike = InlineKeyboardButton(text='🤬 '+str(comm[10]), callback_data='dislike video')
-    item_comm = InlineKeyboardButton(text='💬 ' +str(comm[12]), callback_data='comment video')
+    item_film_like = InlineKeyboardButton(text='😍 '+str(mass_counter_values[0]), callback_data='like video')
+    item_film_dislike = InlineKeyboardButton(text='🤬 '+str(mass_counter_values[1]), callback_data='dislike video')
+    item_comm = InlineKeyboardButton(text='💬 ' +str(mass_counter_values[2]), callback_data='comment video')
     item_fav = InlineKeyboardButton(text='🚫 Remove', callback_data='del favourite')
     item_watch_f = InlineKeyboardButton(text='▶️ Watch now', callback_data='start watching')
     item_searc_an = InlineKeyboardButton(text='🔍 Search another', switch_inline_query_current_chat='')
@@ -79,3 +81,5 @@ def film_create(film_name, id_person):
     #print(comm)
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
     return [comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12], next_step_keyboard, comm[4], comm[16], comm[17]]
+
+  def stars
