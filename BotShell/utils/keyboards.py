@@ -25,26 +25,48 @@ async def start_kerboard():
     start_kerboard.add(item_search, item_popul, item_movies, item_tv_shows, item_my_prof, item_markers,  item_requests, item_inf)
     return start_kerboard
 
-
+#telegram_markup(await get_message(0)
 async def movie_keyboard_kerboard():
     movie_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     item_back = InlineKeyboardButton(text='⬅ Back')
-    item_pop = InlineKeyboardButton(text=await get_message(8))
-    item_recently_added = InlineKeyboardButton(text=await get_message(9))
+    item_pop = InlineKeyboardButton(text=telegram_markup(await get_message(8)))
+    item_recently_added = InlineKeyboardButton(text=telegram_markup(await get_message(9)))
     # item_top_rating = InlineKeyboardButton(text='Top rating')
-    item_top_rating = InlineKeyboardButton(text=await get_message(10))
+    item_top_rating = InlineKeyboardButton(text=telegram_markup(await get_message(10)))
     # random film
-    item_watched_list = InlineKeyboardButton(text=await get_message(11))
+    item_watched_list = InlineKeyboardButton(text=telegram_markup(await get_message(11)))
     # item_random = InlineKeyboardButton(text='Random film')
     # item_filter = InlineKeyboardButton(text='🎚Filter')
-    item_Genres = InlineKeyboardButton(text=await get_message(12))
-    item_Years = InlineKeyboardButton(text=await get_message(13))
+    item_Genres = InlineKeyboardButton(text=telegram_markup(await get_message(12)))
+    item_Years = InlineKeyboardButton(text=telegram_markup(await get_message(13)))
     # item_watched_list = InlineKeyboardButton(text='History')
     # recently added top rating
 
     movie_keyboard.insert(item_back).add(item_pop, item_recently_added, item_top_rating, item_watched_list, item_Genres,
                                          item_Years)
 
+
+async def main_m_keyboard():
+    main_m_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+
+    item_back1 = InlineKeyboardButton(text=telegram_markup(await get_message(44)))
+    item_main_m1 = InlineKeyboardButton(text=telegram_markup(await get_message(40)))
+    item_watch_n1 = InlineKeyboardButton(text=telegram_markup(await get_message(41)))
+    item_u_Comments = InlineKeyboardButton(text=telegram_markup(await get_message(42)))
+    item_u_fav = InlineKeyboardButton(text=telegram_markup(await get_message(43)))
+    main_m_keyboard.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
+    return main_m_keyboard
+
+
+async def main_m_keyboard2():
+    main_m_keyboard_2 = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+
+    item_back1 = InlineKeyboardButton(text='⬅️ Back')
+    item_main_m1 = InlineKeyboardButton(text='🏠 Main menu')
+    item_watch_n1 = InlineKeyboardButton(text='▶️ Watch now')
+    item_u_Comments = InlineKeyboardButton(text='💬 Comments')
+    item_u_fav = InlineKeyboardButton(text='🚫 Remove')
+    main_m_keyboard_2.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
 
 #📁📂🗂
 #после movie
@@ -109,24 +131,6 @@ item_Again_ = InlineKeyboardButton(text='🔁 Again')
 
 again_keyboard.add(item_back_m_m,item_Again_ )
 
-#fim k
-main_m_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-
-item_back1 = InlineKeyboardButton(text='⬅️ Back')
-item_main_m1 = InlineKeyboardButton(text='🏠 Main menu')
-item_watch_n1 = InlineKeyboardButton(text='▶️ Watch now')
-item_u_Comments = InlineKeyboardButton(text='💬 Comments')
-item_u_fav = InlineKeyboardButton(text='❤️ Favorite')
-main_m_keyboard.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
-
-main_m_keyboard_2 = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-
-item_back1 = InlineKeyboardButton(text='⬅️ Back')
-item_main_m1 = InlineKeyboardButton(text='🏠 Main menu')
-item_watch_n1 = InlineKeyboardButton(text='▶️ Watch now')
-item_u_Comments = InlineKeyboardButton(text='💬 Comments')
-item_u_fav = InlineKeyboardButton(text='🚫 Remove')
-main_m_keyboard_2.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
 
 
 

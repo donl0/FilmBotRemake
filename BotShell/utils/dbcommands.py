@@ -12,9 +12,16 @@ from django.db.models import F
 
 
 @sync_to_async
+def add_new_favourite_film_user(film_name, user_id):
+    Users.objects.get(id_tele=user_id).favourite.add(Films.objects.get(film_name=film_name))
+
+
+@sync_to_async
 def get_favourite_user(user_id):
     favourite_list = Users.objects.get(id_tele=user_id).favourite.all()
+    favourite_list = list(favourite_list)
     return favourite_list
+
 
 @sync_to_async
 def remove_liked_film_user(film_name, user_id):
@@ -34,6 +41,7 @@ def add_new_liked_film_user(film_name, user_id):
 @sync_to_async
 def add_new_disliked_film_user(film_name, user_id):
     Users.objects.get(id_tele=user_id).disliked_films.add(Films.objects.get(film_name=film_name))
+
 
 @sync_to_async
 def decrease_film_likes(film_name):
@@ -72,6 +80,7 @@ def get_likes_from_user(user_id):
 @sync_to_async
 def get_all_by_film_name(film_name):
     film_info = Films.objects.get(film_name=film_name)
+   # film_info = list(film_info)
     return film_info
 
 
@@ -113,6 +122,7 @@ def get_all_general_history():
 @sync_to_async
 def get_all_info():
     info = Films.objects.filter()
+    info = list(info)
     return info[0]
 
 

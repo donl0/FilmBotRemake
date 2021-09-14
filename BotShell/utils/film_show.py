@@ -2,19 +2,20 @@ from .dbcommands import get_all_by_film_name, get_admin, get_favourite_user
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
-
+from asgiref.sync import sync_to_async
 #from db_cursor import cursor, conn
 #from config import admin_id
-def film_create(film_name, id_person):
+async def film_create(film_name, id_person):
   admin_id = await get_admin()
   film_name=film_name.replace("'", "''")
   film_inf = await get_all_by_film_name(film_name)
+
   #film_inf
-  mass_counter_values = [film_inf.likes, film_name.dislikes, film_inf.comments_counter]
+  mass_counter_values = [film_inf.likes, film_inf.dislikes, film_inf.comments_counter]
  # cursor.execute(f"SELECT * from `films_list` WHERE name_film='{film_name}'")
   #comm = cursor.fetchone()
   # comm вся информация об одном фильме
-  favorurite_list = await get_favourite_user()
+  favorurite_list = await get_favourite_user(id_person)
  # cursor.execute(f"SELECT favourite FROM `user_info` WHERE id_tele={id_person}")
  # comm_list = cursor.fetchone()[0]
  # mass_i=[9, 10, 12]
@@ -59,7 +60,7 @@ def film_create(film_name, id_person):
   #  print('----------COMM------')
     #print(comm) 9 10 5
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
-    return [film_inf.film_name, film_inf.year, film_inf.rating, film_inf.genres.all(), film_inf.trailer_link, 'here was genres', mass_counter_values[2], next_step_keyboard, film_inf.description, comm[16], comm[17]]
+    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, film_inf.director, await make_list(film_inf.stars.all())]
   else:
     next_step_keyboard = InlineKeyboardMarkup(row_width=3, resize_keyboard=True)
     item_film_like = InlineKeyboardButton(text='😍 '+str(mass_counter_values[0]), callback_data='like video')
@@ -80,6 +81,11 @@ def film_create(film_name, id_person):
   #  print('----------COMM------')
     #print(comm)
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
-    return [comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12], next_step_keyboard, comm[4], comm[16], comm[17]]
+    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, film_inf.director, await make_list(film_inf.stars.all())]
 
-  def stars
+
+@sync_to_async
+def make_list(values):
+  print(values)
+  values = list(values)
+  return values

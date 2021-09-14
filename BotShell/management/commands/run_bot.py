@@ -11,7 +11,8 @@ from django.conf import settings
 from ...handlers.mainMenu import main_menu_handlers
 from ...handlers.video import video_handlers
 from ...handlers.moviesMenu import movies_menu_handlers
-
+from ...handlers.callback_requests import callback_requests_handlers
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 #from ...handlers.callback import callback_handlers
 #from ...handlers.registration import registration_handlers, new_date_handlers
 
@@ -34,14 +35,14 @@ async def bot_settings(loop=None):
 
     bot = Bot(token=settings.TG_TOKEN, parse_mode='HTML', loop=loop)
 
-    dp = Dispatcher(bot)
+    dp = Dispatcher(bot, storage=MemoryStorage())
 
    # await cmd_handlers(bot, dp)
    # await text_handlers(bot, dp)
     await video_handlers(bot, dp)
     await main_menu_handlers(bot, dp)
     await movies_menu_handlers(bot, dp)
-
+    await callback_requests_handlers(bot, dp)
 
     #await callback_handlers(bot, dp)
     #await registration_handlers(bot, dp)

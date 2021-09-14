@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b65438f-287b-4dfb-a827-f96ab4e65a28" name="Changes" comment="" />
+    <list default="true" id="9b65438f-287b-4dfb-a827-f96ab4e65a28" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/handlers/callback_requests.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/handlers/callback_requests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/management/commands/run_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/management/commands/run_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/utils/dbcommands.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/dbcommands.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/utils/film_show.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/film_show.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/utils/keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/keyboards.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,5 +55,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
