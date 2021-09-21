@@ -253,8 +253,7 @@ def film_pars(film_name):
         mass_stars.append(i.text)
     for i in mass_stars:
         string_stars+=i+','
-    string_stars=string_stars[:-1]    
-    string_stars=string_stars.replace("'", "''")
+    string_stars=string_stars[:-1]
     print(string_stars)
     #print(stars_parse.text)
     #stars=stars_parse.text

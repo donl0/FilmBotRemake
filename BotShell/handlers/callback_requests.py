@@ -5,11 +5,14 @@ from ..utils.text import telegram_markup
 from ..utils.dbcommands import get_all_info, get_message, get_all_general_history, get_paper_count, get_trending_films, \
     get_likes_from_user, decrease_film_likes, increase_film_likes, add_new_liked_film_user, \
     remove_liked_film_user, get_dislikes_from_user, increase_film_dislikes, add_new_disliked_film_user, \
-    decrease_film_dislikes, remove_disliked_film_user, get_favourite_user, add_new_favourite_film_user
+    decrease_film_dislikes, remove_disliked_film_user, get_favourite_user, add_new_favourite_film_user, \
+    remove_new_favourite_film_user
 from ..utils.scroll_keyboard import page_open
 from ..utils.film_show import film_create
 from ..utils.keyboards import main_m_keyboard, main_m_keyboard2
 import re
+
+from ..utils.tools import get_only_names, do_with_3_10_8_film_info, get_only_names2
 
 
 async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
@@ -35,18 +38,18 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
             #   print(call)
            # cursor.execute(f"SELECT `id likes` FROM  user_info WHERE id_tele='{id_person}'")
          #   likes_list = await get_likes_from_user(id_person)  # то что лайкал чел
-
+            capt = call.message['caption']
             phoneNum = re.compile(r'([\s\S]+)[(]\d+[)\n]')
             Fn = phoneNum.search(capt)
-            film_name = Fn.group(1).replace("'", "''")
+            film_name = Fn.group(1)
             film_name_sk = film_name.split('(')
 
             if len(film_name_sk) > 1:
                 film_name = film_name_sk[0]
-            #   print(Fn.group(1))
+
             likes_list = await get_likes_from_user(id_person)
 
-            if not str(film_name) in likes_list:  # если чел не лайкал этот фильм то
+            if not str(film_name) in await get_only_names(likes_list):  # если чел не лайкал этот фильм то
                 # print(id_film)
                 await bot.answer_callback_query(callback_query_id=call.id, text='You like that movie 😍',
                                                 show_alert=False)
@@ -74,7 +77,9 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
             #film_inf = cursor.fetchone()[0]
             # print('film_info')
             # print(film_inf)
-            film_info = await film_create({user_data['film_name']}, id_person)
+            print('--------------')
+            print(user_data['film_name'])
+            film_info = await film_create(film_name, id_person)
             #  print('-----film_info-------')
             #  print(film_info)
             #  print(film_info[4], film_info[0], film_info[1], film_info[3], film_info[2])
@@ -95,13 +100,13 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
         elif call.data == 'dislike video':
             #cursor.execute(f"SELECT `id dislikes` FROM  user_info WHERE id_tele='{id_person}'")
             #likes_list = cursor.fetchone()[0]
-            dislike_list = await get_dislikes_from_user()
-            dislike_list = dislike_list.dislikes.all()
+            dislike_list = await get_dislikes_from_user(id_person)
+           # dislike_list = dislike_list.dislikes.all()
             capt = call.message['caption']
 
             phoneNum = re.compile(r'([\s\S]+)[(]\d+[)\n]')
             Fn = phoneNum.search(capt)
-            film_name = Fn.group(1).replace("'", "''")
+            film_name = Fn.group(1)
             film_name_sk = film_name.split('(')
 
             if len(film_name_sk) > 1:
@@ -109,8 +114,10 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
             #  print(Fn.group(1))
            # cursor.execute(f"SELECT id FROM films_list WHERE name_film = '{film_name}'")
            # id_film = cursor.fetchone()[0]
-            dislike_list = dislike_list.split(" ")
-            if not film_name in dislike_list:
+            #dislike_list = dislike_list.split(" ")
+            print(dislike_list)
+            print(film_name)
+            if not film_name in await get_only_names(dislike_list):
                 #  print(id_film)
                 await bot.answer_callback_query(callback_query_id=call.id, text='You don’t like that movie 🤬',
                                                 show_alert=False)
@@ -125,7 +132,7 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
                 #cursor.execute(f"UPDATE films_list SET dislikes= dislikes-1 WHERE name_film = '{film_name}'")
                # cursor.execute(f"SELECT `id dislikes` FROM  user_info WHERE id_tele='{id_person}'")
                 await decrease_film_dislikes(film_name)
-                await remove_disliked_film_user(film_name)
+                await remove_disliked_film_user(film_name, id_person)
                # likes_list = cursor.fetchone()[0]
                # likes_list = likes_list.replace(' ' + str(id_film), '')
                # cursor.execute(f"UPDATE user_info SET `id dislikes` = '{likes_list}' WHERE id_tele='{id_person}';")
@@ -160,14 +167,14 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
             # print(comm_list)
             phoneNum = re.compile(r'([\s\S]+)[(]\d+[)\n]')
             Fn = phoneNum.search(capt)
-            film_name = Fn.group(1).replace("'", "''")
+            film_name = Fn.group(1)
             film_n_film_inf = film_name
             film_name_sk = film_name.split('(')
 
             if len(film_name_sk) > 1:
                 film_name = film_name_sk[0]
 
-            if not film_name in favourite_list:
+            if not film_name in get_only_names2(favourite_list):
 
                # cursor.execute(
              #       f"UPDATE user_info SET `favourite` = CONCAT(`favourite`,',{film_name}') WHERE id_tele='{id_person}';")
@@ -175,14 +182,20 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
                 await add_new_favourite_film_user(film_name, id_person)
                 await bot.answer_callback_query(callback_query_id=call.id, text='Film added in favourite list',
                                                 show_alert=False)
+                film_info = await film_create(film_name, id_person)
+                await bot.edit_message_reply_markup(chat_id=id_person, message_id=call.message.message_id,
+                                            reply_markup=film_info[7])
             else:
+                await remove_new_favourite_film_user(film_name, id_person)
                 await bot.answer_callback_query(callback_query_id=call.id,
-                                                text='You have already added this in favourite', show_alert=False)
-
+                                                text='Film deleted from favourite', show_alert=False)
+                film_info = await film_create(film_name, id_person)
+                await bot.edit_message_reply_markup(chat_id=id_person, message_id=call.message.message_id,
+                                                    reply_markup=film_info[7])
         else:
             print(call.data)
             name_f = call.data.split('_')
-            name_f[1] = name_f[1].replace("'", "''")
+
             await state.update_data(film_name=name_f[1])
             # print(name_f[1])
             print(name_f[1])
@@ -190,49 +203,22 @@ async def callback_requests_handlers(bot: Bot, dp: Dispatcher):
            # film_inf = cursor.fetchone()[0]
             # print('film_info')
             # print(film_inf)
+
+            print(name_f[1])
             film_info = await film_create(name_f[1], id_person)
             print(film_info[3])
             print(len(film_info[3]))
-            #  print('-----film_info-------')
-            #  print(film_info)
-            #  print(film_info[4], film_info[0], film_info[1], film_info[3], film_info[2])
-            #film_info[3] = film_info[3].split(',')
-            len_f_l = len(film_info[3])
-            if len_f_l > 2:
-                film_info[3] = str(film_info[3][0]) + ', ' + str(film_info[3][1]) + ', ' + str(film_info[3][2])
-            elif len_f_l == 2:
-                film_info[3] = str(film_info[3][0]) + ', ' + str(film_info[3][1])
-            elif len_f_l == 1:
-                film_info[3] = str(film_info[3][0])
-            else:
-                film_info[3] = ''
-            # print(film_info[3])
-            # print(film_info[3][0])
-            # film_info[3]=Fn.group(1)+','+Fn.group(2)
-            if len(film_info[8]) > 550:
-                film_info[8] = str(film_info[8][0:550]) + '...'
-            print(len(film_info))
-           # film_info[10] = film_info[10].split(',')
-            if len(film_info[10]) > 2:
-                film_info[10] = str(film_info[10][0]) + ', ' + str(film_info[10][1]) + ', ' + str(film_info[10][2])
-            elif len(film_info[10]) == 2:
-                film_info[10] = str(film_info[10][0]) + ', ' + str(film_info[10][1])
-            elif len(film_info[10]) == 1:
-                film_info[10] = str(film_info[10][0])
-            else:
-                film_info[10] = ''
-            film_info[8] = str(film_info[8].replace("'", "'"))
-            # film_info[3]=film_info[3].replace(", "," #")
 
+            film_info_remake = do_with_3_10_8_film_info(film_info[3], film_info[10],film_info[8])
+            film_info[3] = film_info_remake['film_info3']
+            film_info[8] = film_info_remake['film_info8']
+            film_info[10] = film_info_remake['film_info10']
             #cursor.execute(f"SELECT favourite FROM `user_info` WHERE id_tele={id_person}")
             #comm_list = cursor.fetchone()[0]
-            favourite_list = await get_favourite_user(id_person)
-            if not name_f[1] in favourite_list:
-                await bot.send_message(chat_id=id_person, text=film_info[0] + '(' + str(film_info[1]) + ')',
-                                       reply_markup=await main_m_keyboard())
-            else:
-                await bot.send_message(chat_id=id_person, text=film_info[0] + '(' + str(film_info[1]) + ')',
-                                       reply_markup=main_m_keyboard2)
+
+            await bot.send_message(chat_id=id_person, text=film_info[0] + '(' + str(film_info[1]) + ')',
+                                   reply_markup=await main_m_keyboard(name_f[1], id_person))
+
             await bot.send_video(chat_id=id_person, video=film_info[4],
                                  caption='*' + str(film_info[0]) + '(' + str(film_info[1]) + ')*' + '\n\n_Genre: ' + str(
                                      film_info[3]) + '_\n' + str(film_info[8]) + '\nIMDb: *' + str(

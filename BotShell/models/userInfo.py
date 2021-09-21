@@ -4,7 +4,7 @@ from .requestsDb import Requests
 
 
 class Users(models.Model):
-    name = models.CharField(verbose_name="name", max_length=50, default="NULL1")
+    name = models.CharField(verbose_name="name", max_length=50, default="name_NULL1")
     id_tele = models.IntegerField(default=None)
     favourite = models.ManyToManyField(Films, blank=True, related_name="NULL2")
     requests = models.ManyToManyField(Requests, blank=True, related_name="NULL3")

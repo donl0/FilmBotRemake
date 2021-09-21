@@ -8,7 +8,15 @@ from django.conf import settings
 
 #from ...handlers.commands import cmd_handlers
 #from ...handlers.text import text_handlers
+from ...handlers.comments import comments_handlers
+from ...handlers.film_by_mess import search_film_handlers
+from ...handlers.genres_year_search_logic import genres_year_logic_handlers
+from ...handlers.inline import inline_handlers
+from ...handlers.page_logic_other import pages
+from ...handlers.other_backs import backs_handlers
+from ...handlers.start import start_handlers
 from ...handlers.mainMenu import main_menu_handlers
+from ...handlers.top_movies import top_handlers
 from ...handlers.video import video_handlers
 from ...handlers.moviesMenu import movies_menu_handlers
 from ...handlers.start_watching_callback import start_watching_handlers
@@ -40,12 +48,23 @@ async def bot_settings(loop=None):
 
    # await cmd_handlers(bot, dp)
    # await text_handlers(bot, dp)
+    await start_handlers(bot, dp)
     await video_handlers(bot, dp)
     await main_menu_handlers(bot, dp)
+    await pages(bot, dp)
+    await top_handlers(bot, dp)
     await movies_menu_handlers(bot, dp)
     await start_watching_handlers(bot, dp)
+    await comments_handlers(bot, dp)
     await callback_requests_handlers(bot, dp)
+    await genres_year_logic_handlers(bot, dp)
 
+
+    await backs_handlers(bot, dp)
+
+
+    await search_film_handlers(bot, dp)
+    await inline_handlers(bot, dp)
     #await callback_handlers(bot, dp)
     #await registration_handlers(bot, dp)
     #await new_date_handlers(bot, dp)

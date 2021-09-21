@@ -9,8 +9,7 @@ async def film_filler(film_name, link):
         film_name=film_name[1:]
         film_data=film_pars(film_name)
         print(link)
-        link=str(link).replace("'","''")
-        film_data[0]=film_data[0].replace("'","''")
+        link=str(link)
         await push_video_link(film_name, link)
      #   cursor.execute(f"UPDATE films_list SET `full link`='{link}' WHERE instr(name_film, '{film_data[0]}')")
        
@@ -24,14 +23,12 @@ async def film_filler(film_name, link):
         film_data[0]=film_data[0].replace('\xa0', ' ')
         film_data[3]=str(film_data[3]).replace("[","")
         film_data[3]=str(film_data[3]).replace("]","")
-        film_data[3]=str(film_data[3]).replace("'","")
-        
-        film_data[0]=film_data[0].replace("'","''")
+
         #film_data[4]=film_data[4].replace('\n', '  ')
         #film_data[4]=film_data[4].replace('\n', ' ')
-        film_data[3]=str(film_data[3]).replace("'","''")
+        film_data[3]=str(film_data[3])
         
-        film_data[4]=str(film_data[4]).replace("'","''")
+        film_data[4]=str(film_data[4])
         film_data[4]=str(film_data[4]).replace("<","''")
         film_data[4]=str(film_data[4]).replace(">","''")
         nameD = re.compile(r'(Written by)[\s\S]+')

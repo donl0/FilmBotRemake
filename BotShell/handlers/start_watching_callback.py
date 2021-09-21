@@ -11,7 +11,7 @@ async def start_watching_handlers(bot: Bot, dp: Dispatcher):
         id_person = call.from_user['id']
         phoneNum = re.compile(r'([\s\S]+)[(]\d+[)\n]')
         Fn = phoneNum.search(capt)
-        film_name = Fn.group(1).replace("'", "''")
+        film_name = Fn.group(1)
         film_name_sk = film_name.split('(')
 
         if len(film_name_sk) > 1:

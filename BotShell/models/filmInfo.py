@@ -28,7 +28,7 @@ class Films(models.Model):
     trailer_link = models.CharField(verbose_name="trailer link", max_length=200,default="NULL")
     trailer_file = models.FileField(verbose_name='trailer', upload_to='videos/', default="NULL")
 
-    photo = models.CharField(max_length=100, default="NULL")
+    photo = models.CharField(max_length=200, default="NULL")
 
     watches24h = models.IntegerField(default=0)
     watches7d = models.IntegerField(default=0)

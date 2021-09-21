@@ -2,26 +2,63 @@ from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 
+from .tools import get_only_names2
 from ..utils.text import telegram_markup
-from ..utils.dbcommands import get_all_info, get_message
+from ..utils.dbcommands import get_all_info, get_message, get_favourite_user
 
+comm_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+item_add_c = InlineKeyboardButton(text='💬 Leave a comment')
+item_back_c = InlineKeyboardButton(text='⬅  Back')
+comm_keyboard.add(item_back_c,item_add_c)
+
+
+async def top_keyboard1():
+    top_keyboard1 = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    item_back = InlineKeyboardButton(text=telegram_markup(await get_message(73)))
+    item_day = InlineKeyboardButton(text=telegram_markup(await get_message(70)))
+    item_mounth = InlineKeyboardButton(text=telegram_markup(await get_message(71)))
+    item_imdb = InlineKeyboardButton(text=telegram_markup(await get_message(72)))
+    top_keyboard1.row(item_back).row(item_day).row(item_mounth).add(item_imdb)
+    return top_keyboard1
+
+
+async def main_m_keyboard(film_name, user_id):
+    main_m_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    favourite_list = await get_favourite_user(user_id)
+    if not film_name in get_only_names2(favourite_list):
+        item_u_fav = InlineKeyboardButton(text=telegram_markup(await get_message(60)))
+    else:
+        item_u_fav = InlineKeyboardButton(text=telegram_markup(await get_message(61)))
+
+    item_back1 = InlineKeyboardButton(text=telegram_markup(await get_message(44)))
+    item_main_m1 = InlineKeyboardButton(text=telegram_markup(await get_message(40)))
+    item_watch_n1 = InlineKeyboardButton(text=telegram_markup(await get_message(41)))
+    item_u_Comments = InlineKeyboardButton(text=telegram_markup(await get_message(42)))
+    #item_u_fav = InlineKeyboardButton(text=telegram_markup(await get_message(43)))
+
+    item_back1 = InlineKeyboardButton(text='⬅️ Back')
+    item_main_m1 = InlineKeyboardButton(text='🏠 Main menu')
+    item_watch_n1 = InlineKeyboardButton(text='▶️ Watch now')
+    item_u_Comments = InlineKeyboardButton(text='💬 Comments')
+
+    return main_m_keyboard.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
 #стартовая клавиатура
 async def start_kerboard():
     start_kerboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     item_search = InlineKeyboardButton(text=telegram_markup(await get_message(0)), switch_inline_query_current_chat='')
-    item_popul = InlineKeyboardButton(text='🔥 Popular')
+    item_popul = InlineKeyboardButton(text=telegram_markup(await get_message(1)))
 
     #item_Trend = InlineKeyboardButton(text='🔥 Trending')
-    item_my_prof=InlineKeyboardButton(text='📂 My profile')
+    item_my_prof=InlineKeyboardButton(text=telegram_markup(await get_message(2)))
     #item_markers=InlineKeyboardButton(text='🧡 Favourite')
-    item_markers=InlineKeyboardButton(text='❤️ My favorites')
-    item_movies = InlineKeyboardButton(text='🎬 Movies')
-    item_tv_shows = InlineKeyboardButton(text='🍿 TV Shows')
+    item_markers=InlineKeyboardButton(text=telegram_markup(await get_message(3)))
+    item_movies = InlineKeyboardButton(text=telegram_markup(await get_message(4)))
+    item_tv_shows = InlineKeyboardButton(text=telegram_markup(await get_message(5)))
 
     #👨‍💻 Help
     #item_requests = InlineKeyboardButton(text='📦 Request')  📮 Request
-    item_requests = InlineKeyboardButton(text='📮 Request')
-    item_inf = InlineKeyboardButton(text='👨‍💻 Help')
+    item_requests = InlineKeyboardButton(text=telegram_markup(await get_message(7)))
+    item_inf = InlineKeyboardButton(text=telegram_markup(await get_message(6)))
     start_kerboard.add(item_search, item_popul, item_movies, item_tv_shows, item_my_prof, item_markers,  item_requests, item_inf)
     return start_kerboard
 
@@ -42,10 +79,10 @@ async def movie_keyboard_kerboard():
     # item_watched_list = InlineKeyboardButton(text='History')
     # recently added top rating
 
-    movie_keyboard.insert(item_back).add(item_pop, item_recently_added, item_top_rating, item_watched_list, item_Genres,
+    return movie_keyboard.insert(item_back).add(item_pop, item_recently_added, item_top_rating, item_watched_list, item_Genres,
                                          item_Years)
 
-
+'''
 async def main_m_keyboard():
     main_m_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 
@@ -56,6 +93,15 @@ async def main_m_keyboard():
     item_u_fav = InlineKeyboardButton(text=telegram_markup(await get_message(43)))
     main_m_keyboard.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
     return main_m_keyboard
+'''
+item_back = InlineKeyboardButton(text='⬅ Back')
+just_back_yrarf_keybard =  ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
+item_year_f = InlineKeyboardButton(text='Choose year')
+just_back_yrarf_keybard.add(item_back).row(item_year_f)
+
+just_back_ganre_keybard =  ReplyKeyboardMarkup(row_width=3, resize_keyboard=True)
+item_ganre_f = InlineKeyboardButton(text='Choose genre')
+just_back_ganre_keybard.add(item_back).row(item_ganre_f)
 
 
 async def main_m_keyboard2():

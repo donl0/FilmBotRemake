@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 admin_id = [455720587]
+#TG_TOKEN = '1460021685:AAF-1qlb6RO3tnT_ti25hxJiWqEmsF2X1Qk'
 TG_TOKEN = '1359393778:AAHsxE3a-eS1mHomEVW636Q2ken7B8-9Jc4'
 SECRET_KEY = 'django-insecure-$+d6&!+vm)0=$qi3h0kq6a5w6_!!fkz1ldu%2lqp7+gtbgev(9'
 
