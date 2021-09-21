@@ -60,7 +60,7 @@ async def film_create(film_name, id_person):
   #  print('----------COMM------')
     #print(comm) 9 10 5
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
-    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, film_inf.director, await make_list(film_inf.stars.all())]
+    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, (await make_list(film_inf.director.all()))[0], await make_list(film_inf.stars.all())]
   else:
     next_step_keyboard = InlineKeyboardMarkup(row_width=3, resize_keyboard=True)
     item_film_like = InlineKeyboardButton(text='😍 '+str(mass_counter_values[0]), callback_data='like video')
@@ -81,7 +81,7 @@ async def film_create(film_name, id_person):
   #  print('----------COMM------')
     #print(comm)
   # print(comm[0], comm[1], comm[2], comm[3], comm[5], comm[11], comm[12])
-    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, film_inf.director, await make_list(film_inf.stars.all())]
+    return [film_inf.film_name, film_inf.year, film_inf.rating, await make_list(film_inf.genres.all()), film_inf.trailer_link, film_inf.director.all(), mass_counter_values[2], next_step_keyboard, film_inf.description, (await make_list(film_inf.director.all()))[0], await make_list(film_inf.stars.all())]
 
 
 @sync_to_async

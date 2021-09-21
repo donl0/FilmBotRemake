@@ -167,6 +167,8 @@ def film_pars(film_name):
     '''
     ######описание
     descr_parse = soup.find('div', class_='GenresAndPlot__ContentParent-cum89p-8 bFvaWW Hero__GenresAndPlotContainer-kvkd64-11 twqaW')
+    descr_parse = descr_parse.find('span', class_='GenresAndPlot__TextContainerBreakpointXS_TO_M-cum89p-0 dcFkRD')
+    print('------------------------')
     print(descr_parse.text)
     string = descr_parse.text
    # print(quotes.prettify())

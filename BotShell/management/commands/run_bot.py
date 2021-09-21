@@ -11,6 +11,7 @@ from django.conf import settings
 from ...handlers.mainMenu import main_menu_handlers
 from ...handlers.video import video_handlers
 from ...handlers.moviesMenu import movies_menu_handlers
+from ...handlers.start_watching_callback import start_watching_handlers
 from ...handlers.callback_requests import callback_requests_handlers
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 #from ...handlers.callback import callback_handlers
@@ -42,6 +43,7 @@ async def bot_settings(loop=None):
     await video_handlers(bot, dp)
     await main_menu_handlers(bot, dp)
     await movies_menu_handlers(bot, dp)
+    await start_watching_handlers(bot, dp)
     await callback_requests_handlers(bot, dp)
 
     #await callback_handlers(bot, dp)

@@ -12,6 +12,28 @@ from django.db.models import F
 
 
 @sync_to_async
+def update_all_watches(film_name):
+  #  film_info = Films.objects.get(film_name=film_name)
+    #film_info.update(watches_all=F('watches_all') + 1)
+    #film_info.update(watches7d=F('watches7d') + 1)
+    #film_info.update(watches1m=F('watches1m') + 1)
+    #film_info.update(watches24h=F('watches24h') + 1)
+    Films.objects.filter(film_name=film_name).update(watches_all=F('watches_all') + 1)
+    Films.objects.filter(film_name=film_name).update(watches7d=F('watches7d') + 1)
+    Films.objects.filter(film_name=film_name).update(watches1m=F('watches1m') + 1)
+    Films.objects.filter(film_name=film_name).update(watches24h=F('watches24h') + 1)
+
+@sync_to_async
+def update_user_history(film_name, user_id):
+    Users.objects.get(id_tele=user_id).history.add(Films.objects.get(film_name=film_name))
+
+
+@sync_to_async
+def update_general_history(film_name):
+    GeneralHistory.objects.get_or_create(film_name=Films.objects.get(film_name=film_name))
+
+
+@sync_to_async
 def add_new_favourite_film_user(film_name, user_id):
     Users.objects.get(id_tele=user_id).favourite.add(Films.objects.get(film_name=film_name))
 
@@ -50,7 +72,7 @@ def decrease_film_likes(film_name):
 
 @sync_to_async
 def decrease_film_dislikes(film_name):
-    Films.objects.get(film_name=film_name).update(likes=F('dislikes') - 1)
+    Films.objects.get(film_name=film_name).update(dislikes=F('dislikes') - 1)
 
 
 @sync_to_async
@@ -60,7 +82,7 @@ def increase_film_likes(film_name):
 
 @sync_to_async
 def increase_film_dislikes(film_name):
-    Films.objects.get(film_name=film_name).update(likes=F('dislikes') + 1)
+    Films.objects.get(film_name=film_name).update(dislikes=F('dislikes') + 1)
 
 
 @sync_to_async
