@@ -29,7 +29,15 @@ async def next_page_info1(counter, film_list, len_l, open_count, id_person):
             num=i+1
             film=film_list[i]
 
-            film_j=film.genres.all()
+            film_j = await get_genres_by_film_name(film)
+
+            for n in range(3):
+                try:
+                    film_j[n] = str(film_j[n])
+                except:
+                    break
+
+
             if len(film_j)>2:
                 film_j=film_j[0]+', '+film_j[1]+', '+film_j[2]
             elif len(film_j)==2:
@@ -97,7 +105,7 @@ async def previous_page_info1(counter, film_list, len_l, open_count, id_person):
     num=0
     text=''
 
-    film_list_trending = await get_trending_films()
+
 
     admin_id = await get_admin()
     if id_person in admin_id:
@@ -111,9 +119,17 @@ async def previous_page_info1(counter, film_list, len_l, open_count, id_person):
     for i in range(counter*open_count,counter*open_count+open_count):
         #print(i)
         num=i+1
-        film=film_list[i]
 
-        film_j=film[3].split(',')
+        film = film_list[i]
+
+        film_j = await get_genres_by_film_name(film)
+
+        for n in range(3):
+            try:
+                film_j[n] = str(film_j[n])
+            except:
+                break
+
         if len(film_j)>2:
             film_j=film_j[0]+', '+film_j[1]+', '+film_j[2]
         elif len(film_j)==2:
@@ -124,12 +140,9 @@ async def previous_page_info1(counter, film_list, len_l, open_count, id_person):
             film_j=''
 
 
-        if (x==True) and (film[0][:-2] in film_list_trending):
-            text+=str(num)+') '+str(film[0])+'('+str(film[1])+')\nIMBb: '+str(film[2])+' | '+film_j+'✅\n\n'
-        else:
-            text+=str(num)+') '+str(film[0])+'('+str(film[1])+')\nIMBb: '+str(film[2])+' | '+film_j+'\n\n'
+        text+=str(num)+') '+str(film.film_name)+'('+str(film.year)+')\nIMBb: '+str(film.rating)+' | '+film_j+'\n\n'
 
-        item_f = InlineKeyboardButton(text=num, callback_data='find film_'+str(film[0]))
+        item_f = InlineKeyboardButton(text=num, callback_data='find film_'+str(film.film_name))
         if num%7==0:
             keyboard_film_list.row(item_f)
         else:

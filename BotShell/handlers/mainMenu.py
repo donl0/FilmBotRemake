@@ -2,8 +2,8 @@ from ..utils.states import OrderDataUser, FSMContext, State
 from aiogram import Bot, Dispatcher
 from aiogram import types
 from ..utils.text import telegram_markup
-from ..utils.dbcommands import get_all_info, get_message, test1
-from ..utils.keyboards import start_kerboard, movie_keyboard_kerboard, top_keyboard
+from ..utils.dbcommands import get_all_info, get_message, test1, get_search_way
+from ..utils.keyboards import start_kerboard, movie_keyboard_kerboard, top_keyboard, search_keyboard
 
 
 async def main_menu_handlers(bot: Bot, dp: Dispatcher):
@@ -12,9 +12,12 @@ async def main_menu_handlers(bot: Bot, dp: Dispatcher):
         id_person = message['from']['id']
         # 🔍 Search
         if message.text == telegram_markup(await get_message(0)):
-           # print(await test1('Crime'))
-            #await bot.send_message(chat_id=id_person, text='Select an action', reply_markup=await start_kerboard())
-            pass
+            search_way = await get_search_way(id_person)
+
+            await bot.send_message(chat_id=message['from']['id'],
+                                   text='🔍 What movie are you looking for?\nSearch: ' + search_way,
+                                   reply_markup=search_keyboard)
+            await OrderDataUser.search_page1.set()
         # 🔥 Popular
         if message.text == telegram_markup(await get_message(1)):
             pass

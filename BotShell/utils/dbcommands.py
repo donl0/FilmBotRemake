@@ -12,6 +12,7 @@ from asgiref.sync import sync_to_async
 from django.db.models import F
 
 
+
 @sync_to_async
 def get_search_way(user_id):
     search_way = Users.objects.get(id_tele=user_id).search_way
