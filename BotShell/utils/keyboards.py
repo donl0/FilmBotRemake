@@ -22,6 +22,15 @@ async def top_keyboard1():
     return top_keyboard1
 
 
+async def box_keyboard1():
+    box_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    item_back = InlineKeyboardButton(text=telegram_markup(await get_message(73)))
+    item_create_req = InlineKeyboardButton(text=telegram_markup(await get_message(90)))
+    item_my_req = InlineKeyboardButton(text=telegram_markup(await get_message(91)))
+    box_keyboard.row(item_back).row(item_create_req, item_my_req)
+    return box_keyboard
+
+
 async def main_m_keyboard(film_name, user_id):
     main_m_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     favourite_list = await get_favourite_user(user_id)
@@ -113,6 +122,50 @@ async def main_m_keyboard2():
     item_u_Comments = InlineKeyboardButton(text='💬 Comments')
     item_u_fav = InlineKeyboardButton(text='🚫 Remove')
     main_m_keyboard_2.add(item_back1, item_main_m1).add(item_watch_n1).add(item_u_Comments, item_u_fav)
+    return main_m_keyboard_2
+
+def search_keyboard1(search_way, paper_count):
+    movie_keyboard1 = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+    item_back = InlineKeyboardButton(text='⬅ Back')
+    item_search1 = InlineKeyboardButton(text='🗒 Search: ' + search_way)
+    item_filter_search2 = InlineKeyboardButton(text='🔢 Movies per page: ' + str(paper_count))
+    movie_keyboard1.insert(item_back).add(item_search1, item_filter_search2)
+    return movie_keyboard1
+
+
+def search_keyboard2(num, mass):
+    search_keyboard1 = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+
+    for i in mass:
+        if i == int(num):
+            item_num = InlineKeyboardButton(text='✅ ' + str(i))
+        else:
+            item_num = InlineKeyboardButton(text=str(i))
+        search_keyboard1.add(item_num)
+
+
+def search_keyboard_str(num, mass):
+    search_keyboard_all = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+
+    for i in mass:
+        if i == num:
+            item_search1 = InlineKeyboardButton(text='✅ ' + i)
+        else:
+            item_search1 = InlineKeyboardButton(text=i)
+        search_keyboard_all.add(item_search1)
+    return search_keyboard_all
+
+
+async def clear_keyboard():
+    clear_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    item_accept_clear = InlineKeyboardButton(text=telegram_markup(await get_message(81)))
+    item_reject_clear = InlineKeyboardButton(text=telegram_markup(await get_message(82)))
+    return clear_keyboard.add(item_accept_clear, item_reject_clear)
+
+my_prof_keyboard = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+
+item_history_clear = InlineKeyboardButton(text='🗑️ Clear all watch history')
+my_prof_keyboard.add(item_back).add(item_history_clear)
 
 #📁📂🗂
 #после movie

@@ -7,10 +7,34 @@ from ..models.admindb import Admins
 from ..models.generalHistory import GeneralHistory
 from ..models.userInfo import Users
 from ..models.commentsDb import Comments
+from ..models.last_search import LastSearch
+from ..models.requestsDb import Requests
 #from .. import models
 from asgiref.sync import sync_to_async
-from django.db.models import F
+from django.db.models import F, Q
 
+
+@sync_to_async
+def add_new_requests(text, id_tele):
+    Requests.objects.create(film_name=text,id_tele=int(id_tele))
+
+
+@sync_to_async
+def get_user_requests(id_tele):
+    film_requests = Requests.objects.filter(id_tele=id_tele)
+    return list(film_requests)
+
+
+@sync_to_async
+def get_all_last_search():
+    all_search = LastSearch.objects.filter()
+    return list(all_search)
+
+
+@sync_to_async()
+def add_to_all_last_search(film_name):
+    LastSearch.objects.filter(film_name=Films.objects.get(film_name=film_name)).delete()
+    LastSearch.objects.create(film_name=Films.objects.get(film_name=film_name))
 
 
 @sync_to_async
@@ -60,7 +84,9 @@ def get_user_history(id_tele):
     return history
 
 
-
+@sync_to_async
+def delete_user_history(id_tele):
+    Users.objects.get(id_tele=id_tele).history.clear()
 
 @sync_to_async
 def films_top_rating():
@@ -127,7 +153,6 @@ def update_general_history(film_name):
 @sync_to_async
 def remove_new_favourite_film_user(film_name, user_id):
     Users.objects.get(id_tele=user_id).favourite.remove(Films.objects.get(film_name=film_name))
-
 
 
 @sync_to_async
@@ -202,16 +227,44 @@ def get_likes_from_user(user_id):
 
 
 @sync_to_async
+def update_paper_count(count_value, id_person):
+    user = Users.objects.filter(id_tele=id_person)
+    user.update(paper_count=count_value)
+
+
+@sync_to_async
+def update_search_way(search_way, id_person):
+    user = Users.objects.filter(id_tele=id_person)
+    user.update(search_way=search_way)
+
+
+@sync_to_async
+def get_all_by_all_preference_search(filter_value):
+    film_info = Films.objects.filter(Q(film_name=filter_value) | Q(director__name__contains=filter_value) | Q(stars__name__contains=filter_value))
+    return list(film_info)
+
+
+@sync_to_async
+def get_all_by_director_film(director):
+    film_info = Films.objects.filter(director__name__contains=director)
+    return list(film_info)
+
+
+@sync_to_async
+def get_all_by_star(star_name):
+    film_info = Films.objects.filter(stars__name__contains=star_name)
+    return list(film_info)
+
+
+@sync_to_async
 def get_all_by_contain_film(film_name):
     film_info = Films.objects.filter(film_name__contains=film_name)
-   # film_info = list(film_info)
     return list(film_info)
 
 
 @sync_to_async
 def get_all_by_film_name(film_name):
     film_info = Films.objects.get(film_name=film_name)
-   # film_info = list(film_info)
     return film_info
 
 

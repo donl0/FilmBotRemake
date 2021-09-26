@@ -42,6 +42,7 @@ async def search_film_handlers(bot: Bot, dp: Dispatcher):
                                          10]) + '_', reply_markup=film_info[7],
                                  parse_mode="Markdown")  # as_html=True#parse_mode=ParseMode.MARKDOWN
         except:
+            print('2=')
             await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu', reply_markup=await start_kerboard())
         #await state.finish()
             await OrderDataUser.to_start_menu.set()

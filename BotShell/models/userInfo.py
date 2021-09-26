@@ -13,10 +13,10 @@ class Users(models.Model):
     history = models.ManyToManyField(Films, blank=True, related_name=None)
 
     search_way_chose = [
-        ('by_name', 'by name'),
-        ('by_actor', 'by actor'),
-        ('by_director', 'by director'),
-        ('by_all', 'by all'),
+        ('by name', 'by name'),
+        ('by actor', 'by actor'),
+        ('by director', 'by director'),
+        ('by all', 'by all'),
     ]
     search_way = models.CharField(verbose_name='search way', default='by name', choices=search_way_chose, max_length=15)
     paper_count = models.IntegerField(verbose_name='paper count', default=5)

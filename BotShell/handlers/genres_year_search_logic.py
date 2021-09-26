@@ -342,6 +342,7 @@ async def genres_year_logic_handlers(bot: Bot, dp: Dispatcher):
                 await bot.send_message(chat_id=id_person, text='List of movies.', reply_markup=just_back_k)
                 await bot.send_message(chat_id=id_person, text=page_inf[0], reply_markup=page_inf[1])
         except:
+            print('1=')
             await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu',
                                    reply_markup=await start_kerboard())
             # await state.finish()

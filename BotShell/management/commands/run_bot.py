@@ -8,8 +8,10 @@ from django.conf import settings
 
 #from ...handlers.commands import cmd_handlers
 #from ...handlers.text import text_handlers
+
 from ...handlers.comments import comments_handlers
-from ...handlers.film_by_mess import search_film_handlers
+from ...handlers.profile_requests import profile_handlers
+from ...handlers.search_keyboard import search_keyboard_handlers
 from ...handlers.genres_year_search_logic import genres_year_logic_handlers
 from ...handlers.inline import inline_handlers
 from ...handlers.page_logic_other import pages
@@ -21,6 +23,7 @@ from ...handlers.video import video_handlers
 from ...handlers.moviesMenu import movies_menu_handlers
 from ...handlers.start_watching_callback import start_watching_handlers
 from ...handlers.callback_requests import callback_requests_handlers
+from ...handlers.film_by_mess import search_film_handlers
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 #from ...handlers.callback import callback_handlers
 #from ...handlers.registration import registration_handlers, new_date_handlers
@@ -50,10 +53,12 @@ async def bot_settings(loop=None):
    # await text_handlers(bot, dp)
     await start_handlers(bot, dp)
     await video_handlers(bot, dp)
+    await search_keyboard_handlers(bot, dp)
     await main_menu_handlers(bot, dp)
     await pages(bot, dp)
     await top_handlers(bot, dp)
     await movies_menu_handlers(bot, dp)
+    await profile_handlers(bot, dp)
     await start_watching_handlers(bot, dp)
     await comments_handlers(bot, dp)
     await callback_requests_handlers(bot, dp)

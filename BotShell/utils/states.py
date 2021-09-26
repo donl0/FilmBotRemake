@@ -39,11 +39,10 @@ class OrderDataUser(StatesGroup):
     to_start_menu = State()
 
     request_list = State()
-
+    Search_filter1 = State()
     search_page1 = State()
     search_page2 = State()
     search_page3 = State()
-    Search_filter1 = State()
     by_name1 = State()
     search_stars = State()
     search_director = State()

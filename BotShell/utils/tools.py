@@ -2,9 +2,20 @@ from asgiref.sync import sync_to_async
 
 
 @sync_to_async
+def get_from_film_requests(list):
+    mass_films = []
+    mass_process = []
+    print(list)
+    list = tuple(reversed(list))
+    for i in range(len(list)):
+        mass_films.append(list[i].film_name)
+        mass_process.append(list[i].verification_process)
+    return mass_films, mass_process
+
+
+@sync_to_async
 def get_list_len(list):
     return len(list)
-
 
 
 @sync_to_async

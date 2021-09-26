@@ -16,7 +16,7 @@ async def backs_handlers(bot: Bot, dp: Dispatcher):
     async def rquest_mak(message: types.Message):
         id_person = message['from']['id']
         text = message.text
-        await bot.send_message(chat_id=id_person, text='You are back to the main menu', reply_markup=start_kerboard)
+        await bot.send_message(chat_id=id_person, text='You are back to the main menu', reply_markup=await start_kerboard())
         await OrderDataUser.to_start_menu.set()
 
 
@@ -90,16 +90,18 @@ async def backs_handlers(bot: Bot, dp: Dispatcher):
                                              10] + '_', reply_markup=film_info[7],
                                  parse_mode="Markdown")  # as_html=True#parse_mode=ParseMode.MARKDOWN
         except:
+            print('3=')
             await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu',
-                                   reply_markup=start_kerboard)
+                                   reply_markup=await start_kerboard())
             # await state.finish()
             await OrderDataUser.to_start_menu.set()
 
         @dp.message_handler(text='⬅ Back', state=OrderDataUser.from_main_menu)
         async def genres_adding(message: types.Message):
+            print('5=')
             # await bot.answer(text='🏠 You are back to main menu', reply_markup=start_kerboard)
             await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu',
-                                   reply_markup=start_kerboard)
+                                   reply_markup=await start_kerboard())
             # await state.finish()
             await OrderDataUser.to_start_menu.set()
 
@@ -143,7 +145,7 @@ async def backs_handlers(bot: Bot, dp: Dispatcher):
         @dp.message_handler(text='⬅ Back', state=OrderDataUser.waiting_fot_help)
         async def genres_adding(message: types.Message, state: FSMContext):
             id_person = message['from']['id']
-            await bot.send_message(chat_id=id_person, text='You are back to the main menu', reply_markup=start_kerboard)
+            await bot.send_message(chat_id=id_person, text='You are back to the main menu', reply_markup=await start_kerboard())
             await OrderDataUser.to_start_menu.set()
 
         #        await OrderDataUser.after_question.set()
@@ -156,16 +158,17 @@ async def backs_handlers(bot: Bot, dp: Dispatcher):
         @dp.message_handler(text='⬅ Back', state=OrderDataUser.box_state)
         async def genres_adding(message: types.Message, state: FSMContext):
             id_person = message['from']['id']
-            await bot.send_message(chat_id=id_person, text='Select section', reply_markup=start_kerboard)
+            await bot.send_message(chat_id=id_person, text='Select section', reply_markup=await start_kerboard())
             await OrderDataUser.to_start_menu.set()
 
         @dp.message_handler(text='⬅ Back',
                             state=[OrderDataUser.resently1, OrderDataUser.popular1, OrderDataUser.history1,
                                    OrderDataUser.my_prof_st, OrderDataUser.tranding1])
         async def genres_adding(message: types.Message):
+            print('6=')
             # await bot.answer(text='🏠 You are back to main menu', reply_markup=start_kerboard)
             await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu',
-                                   reply_markup=start_kerboard)
+                                   reply_markup=await start_kerboard())
             # await state.finish()
             await OrderDataUser.to_start_menu.set()
 
@@ -212,10 +215,8 @@ async def backs_handlers(bot: Bot, dp: Dispatcher):
                     await bot.send_message(chat_id=id_person, text='List of movies.', reply_markup=just_back_k)
                     await bot.send_message(chat_id=id_person, text=page_inf[0], reply_markup=page_inf[1])
             except:
+                print('7=')
                 await bot.send_message(chat_id=message['from']['id'], text='🏠 You are back to main menu',
-                                       reply_markup=start_kerboard)
+                                       reply_markup=await start_kerboard())
                 # await state.finish()
                 await OrderDataUser.to_start_menu.set()
-
-
-
