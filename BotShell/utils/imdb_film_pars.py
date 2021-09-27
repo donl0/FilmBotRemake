@@ -46,9 +46,10 @@ def film_pars(film_name):
     print(year)
     quotes = quotes.find('a')
     print(quotes)
-    
-    film_name1=text
-    str_year=year
+    if len(text) > 50:
+        text = text[0:50]
+    film_name1 = text
+    str_year = year
     #for tag in quotes:
         #print(tag.get('href'))
     link=quotes.get('href')#берём на него ссылку
@@ -133,7 +134,6 @@ def film_pars(film_name):
     mass_genres=[]
     for i in genres_parse:
         mass_genres.append(i.text)
-    print(mass_genres)
     #genres_parse
     genres=mass_genres
     '''

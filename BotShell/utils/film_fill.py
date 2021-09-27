@@ -21,12 +21,12 @@ async def film_filler(film_name, link):
         #print(film_data[0])
         print(film_data)
         film_data[0]=film_data[0].replace('\xa0', ' ')
-        film_data[3]=str(film_data[3]).replace("[","")
-        film_data[3]=str(film_data[3]).replace("]","")
+        #film_data[3]=str(film_data[3]).replace("[","")
+        #film_data[3]=str(film_data[3]).replace("]","")
 
         #film_data[4]=film_data[4].replace('\n', '  ')
         #film_data[4]=film_data[4].replace('\n', ' ')
-        film_data[3]=str(film_data[3])
+        #film_data[3]=str(film_data[3])
         
         film_data[4]=str(film_data[4])
         film_data[4]=str(film_data[4]).replace("<","''")
@@ -36,13 +36,15 @@ async def film_filler(film_name, link):
 
         film_data[7] = film_data[7].split(',')#to make mass
 
-        film_data[3] = film_data[3].split(',')
+      #  film_data[3] = film_data[3].split(',')
         i = 0
-        for genre in film_data[3]:
-            if genre[0] == ' ':
-                film_data[3][i] = genre[1:]
+        print('======')
+        print(film_data[3])
+        #for genre in film_data[3]:
+         #   if genre[0] == ' ':
+          #      film_data[3][i] = genre[1:]
 
-            i += 1
+           # i += 1
     # print(film_data)
         #film_data[0]=film_data[0].encode('utf8')
         #return [film_name, year, rating, mass, string] 0,3
