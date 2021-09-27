@@ -1,5 +1,5 @@
 Film library Telegram bot with users system.
-Admin should uploat film with this plan:
+Admin should uploat film with this plan(add your tele id in admin model):
   1)send trailer with film name and year
   2)wait for approval from bot
   3)send '-'+film name and year with film file
@@ -9,7 +9,7 @@ User system are realized with history, favourite, comments and requests function
 
 '🔥 Popular' button contains films that admin will add from admin model.
 
-Every text in bot you can change with Messages from admin panel.
+Every text in bot you can change with Messages from admin panel(Messages have their own id).
 
 To start bot you should run 2 commadns(you can do this from 2 consoles).
 pytohn manage.py runserver
