@@ -10,6 +10,9 @@ class Genres(models.Model):
     def __str__(self):
         return self.genre_name
 
+    class Meta:
+        verbose_name_plural = 'Genres'
+
 
 class Films(models.Model):
     film_name = models.CharField(verbose_name="name", max_length=100, default="NULL", unique=True)
@@ -39,11 +42,9 @@ class Films(models.Model):
     dislikes = models.IntegerField(default=0)
     comments_counter = models.IntegerField(verbose_name='comments counter', default=0)
 
-    #comments = models.ManyToManyField(Comments, blank=True)
-
-    class Meta:
-        verbose_name = 'film'
-
     def __str__(self):
         return self.film_name
 
+    class Meta:
+        verbose_name = 'film'
+        verbose_name_plural = 'Films'

@@ -8,3 +8,6 @@ class Admins(models.Model):
 
     def __str__(self):
         return str(self.admin_id)
+
+    class Meta:
+        verbose_name_plural = 'Admins'

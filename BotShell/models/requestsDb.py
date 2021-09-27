@@ -14,3 +14,7 @@ class Requests(models.Model):
 
     def __str__(self):
         return str(self.film_name)
+
+    class Meta:
+        verbose_name = 'Request'
+        verbose_name_plural = 'Requests'

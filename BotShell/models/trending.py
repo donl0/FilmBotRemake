@@ -8,3 +8,7 @@ class TrendingFilms(models.Model):
 
     def __str__(self):
         return str(self.film_name)
+
+    class Meta:
+        verbose_name = 'Trending Film'
+        verbose_name_plural = 'Trending Films'

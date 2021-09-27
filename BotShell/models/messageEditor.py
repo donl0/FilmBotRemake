@@ -7,6 +7,7 @@ class Message(models.Model):
     text = RichTextField(max_length=1024)
    # message_id = models.IntegerField(unique=True)
     msg_id = models.IntegerField(default=0, unique=True)
+
     def __str__(self):
 
         text = clean_html_markup(self.text)
@@ -15,3 +16,6 @@ class Message(models.Model):
         else:
             return text
 
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'

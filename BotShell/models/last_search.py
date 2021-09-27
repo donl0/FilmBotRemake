@@ -7,3 +7,7 @@ class LastSearch(models.Model):
 
     def __str__(self):
         return str(self.film_name)
+
+    class Meta:
+        verbose_name = 'Last search films'
+        verbose_name_plural = 'Last search films'

@@ -22,5 +22,8 @@ class Users(models.Model):
     paper_count = models.IntegerField(verbose_name='paper count', default=5)
 
     def __str__(self):
-        return self.name+', '+str(self.id_tele)
+        return self.name
 
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
