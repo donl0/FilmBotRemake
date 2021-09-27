@@ -11,9 +11,9 @@ User system are realized with history, favourite, comments and requests function
 
 Every text in bot you can change with Messages from admin panel.
 
-#To start bot you should run 2 commadns(you can do this from 2 consoles).
+To start bot you should run 2 commadns(you can do this from 2 consoles).
 pytohn manage.py runserver
 pytohon manage.py run_bot
 
-#To connect to admin panel:
+To connect to admin panel:
 Go url+/admin (check from pytohn manage.py runserver).
