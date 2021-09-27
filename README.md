@@ -1,4 +1,4 @@
-#Film library Telegram bot with users system.
+Film library Telegram bot with users system.
 Admin should uploat film with this plan:
   1)send trailer with film name and year
   2)wait for approval from bot
