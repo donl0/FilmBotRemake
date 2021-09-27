@@ -15,6 +15,21 @@ from django.db.models import F, Q
 
 
 @sync_to_async
+def clear24h_watches():
+    Films.objects.filter().update(watches24h=0)
+
+
+@sync_to_async
+def clear7d_watches():
+    Films.objects.filter().update(watches7d=0)
+
+
+@sync_to_async
+def clear1m_watches():
+    Films.objects.filter().update(watches1m=0)
+
+
+@sync_to_async
 def add_new_requests(text, id_tele):
     Requests.objects.create(film_name=text,id_tele=int(id_tele))
 
