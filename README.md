@@ -1,8 +1,8 @@
 Film library Telegram bot with users system.
 Admin should uploat film with this plan(add your tele id in admin model):
-  1)send trailer with film name and year
+  1)send trailer with film name(like in IMDB)
   2)wait for approval from bot
-  3)send '-'+film name and year with film file
+  3)send '-'+film name with film file
   Enother data (actors, genres etc.) will parse from IMDB
 
 User system are realized with history, favourite, comments and requests functions for every own person.
