@@ -19,6 +19,7 @@ class Films(models.Model):
     year = models.CharField(max_length=5, default="NULL")
     rating = models.FloatField(default=0)
     genres = models.ManyToManyField(Genres, blank=True)
+    similar_films = models.ManyToManyField("self", blank=True)
 
     description = models.CharField(max_length=1500, default="NULL")
 

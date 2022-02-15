@@ -15,10 +15,12 @@ async def clear1m():
     await clear1m_watches()
 
 
+
 async def scheduler():
     aioschedule.every().days.at("10:00").do(clear24h)
     aioschedule.every(7).days.at("10:00").do(clear7d)
     aioschedule.every(30).days.at("10:00").do(clear1m)
+
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)

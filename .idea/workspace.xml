@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9b65438f-287b-4dfb-a827-f96ab4e65a28" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotShell/handlers/callback_requests.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/handlers/callback_requests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotShell/management/commands/run_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/management/commands/run_bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotShell/utils/dbcommands.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/dbcommands.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotShell/utils/film_show.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/film_show.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotShell/utils/keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/utils/keyboards.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/models/filmInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/models/filmInfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotShell/models/generalHistory.py" beforeDir="false" afterPath="$PROJECT_DIR$/BotShell/models/generalHistory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +24,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/BotShell/utils" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
